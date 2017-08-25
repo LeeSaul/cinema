@@ -2,7 +2,7 @@ package com.ls.test;
 
 import com.ls.biz.*;
 import com.ls.biz.impl.*;
-import com.ls.entity.AllEntity;
+import com.ls.entity.Cinema;
 import com.ls.entity.Movie;
 import com.ls.show.AdminMenu;
 import com.ls.show.MainMenu;
@@ -22,7 +22,7 @@ public class Test {
         ICinemaBiz cinemaBiz=new CinemaBizImpl();
         IAddressBiz addressBiz=new AddressBizImpl();
         IAllEntityBiz allEntityBiz=new AllEntityBizImpl(); //多表联查使用此对象
-
+        IScreeningBiz screeningBiz=new ScreeningBizImpl();
 
         MainMenu.welcome();
         while (true) {
@@ -33,7 +33,34 @@ public class Test {
                     boolean isLogin = adminBizImpl.adminLogin();
                     if (isLogin) {
                         //场次模块
-
+                        while (true){
+                            AdminMenu.screeningAdminMenu();
+                            int num=Input.getInteger();
+                            switch (num){
+                                case 1:
+                                    //选择区域添加电影场次
+                                    boolean isAddScreening = screeningBiz.isAddScreening();
+                                    if (isAddScreening){
+                                        System.out.println("添加电影");
+                                    }
+                                    break;
+                                case 2:
+                                    //更新某区域电影场次
+                                    boolean b = screeningBiz.updateScreening();
+                                    System.out.println("更新"+b);
+                                    break;
+                                case 3:
+                                    //
+                                    break;
+                                case 0:
+                                    //0返回上一级
+                                    break;
+                                default:
+                                    System.out.println("输入错误");
+                                    break;
+                            }
+                            break;
+                        }
 
 
                         //影院模块
@@ -62,10 +89,13 @@ public class Test {
 
                                 //按区域查找电影院信息
                                 case 3:
-                                    boolean b2 = addressBiz.searchCinemaNameByAdress();
-                                    if (!b2){
-                                        System.out.println("该区域不存在电影院");
+                                    List<Cinema> cinemas = cinemaBiz.searchCinemaByAddresses();
+                                    if (cinemas!=null){
+                                        for (Cinema cinema : cinemas) {
+                                            System.out.println(cinema);
+                                        }
                                     }
+                                    System.out.println("该区域不存在电影院");
                                     break;
 
                                 //显示所有电影院信息

@@ -56,12 +56,28 @@ public class ScreeningDaoImpl extends BaseDao implements IScreeningDao{
     }
 
     @Override
+    public List<Screening> searchAllScreeningByArea(Screening screening) {
+        List parms = new ArrayList();
+        String sql="select * from screening where cinema_id=?";
+        parms.add(screening.getCinemaId());
+        List<Screening> list = query(sql, parms, Screening.class);
+        if (list!=null){
+            return list;
+        }
+        return null;
+    }
+
+    @Override
     public Screening updateScreening(Screening screening) {
         List parms = new ArrayList();
         String sql="update screening set hall_num=?," +
                 "seat_capacity=?,sell_num=?,screening_start_date=?," +
                 "screening_end_date=?,screening_status=?," +
                 "screening_cancle_date=? where cinema_id=? AND movie_id=?";
+        String sql2="select * from screening where hall_num=? AND seat_capacity=? AND sell_num=? " +
+                "AND screening_start_date=? AND screening_end_date=? " +
+                "AND screening_status=? AND screening_cancle_date=?" +
+                " AND cinema_id=? AND movie_id=?";
         parms.add(screening.getHallNum());
         parms.add(screening.getSeatCapacity());
         parms.add(screening.getSellNum());
@@ -71,8 +87,9 @@ public class ScreeningDaoImpl extends BaseDao implements IScreeningDao{
         parms.add(screening.getScreeningCancleDate());
         parms.add(screening.getCinemaId());
         parms.add(screening.getMovieId());
-        List<Screening> list = query(sql, parms, Screening.class);
-        if (list!=null){
+        boolean isUpdate = update(sql, parms);
+        if (isUpdate){
+            List<Screening> list = query(sql2, parms, Screening.class);
             return list.get(0);
         }
         return null;

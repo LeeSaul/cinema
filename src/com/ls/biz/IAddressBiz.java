@@ -10,8 +10,13 @@ import java.util.List;
  * To Be or Not to Be
  */
 public interface IAddressBiz {
+    //添加地址
     Address addAddressInfo();
-    boolean searchCinemaNameByAdress();
+
+    //通过地址查找区域该所有的影院
+    List<Address> searchCinemaByAddress();
+
     boolean searchCinemaById(int id);
+
     boolean updateCinemaAddressById(int id);
 }

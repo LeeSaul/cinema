@@ -13,6 +13,7 @@ import java.util.List;
 public class CommentDaoImpl extends BaseDao implements ICommentDao{
     @Override
     public Comment addCommnet(Comment comment) {
+        //Ìí¼ÓÆÀÂÛ
         List parms = new ArrayList();
         String sql = "insert into comment(user_id,movie_id,ticket_id,user_comment,comment_score)" +
                 " values(?,?,?,?,?)";

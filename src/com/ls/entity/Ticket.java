@@ -1,17 +1,21 @@
 package com.ls.entity;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
  * Created by LS on 2017/8/21 12:21.
  * To Be or Not to Be
  */
-public class Ticket {
+public class Ticket implements Serializable{
     private int id;
     private int screeningId;   //场次id
     private int userId;
     private int seatNum;    //座位号（唯一）
     private Timestamp ticketCreateDate; //影票创建时间
+
+    public Ticket() {
+    }
 
     public int getId() {
         return id;

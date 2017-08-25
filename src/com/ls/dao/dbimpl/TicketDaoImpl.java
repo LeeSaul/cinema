@@ -10,7 +10,7 @@ import java.util.List;
  * Created by LS on 2017/8/24 10:22.
  * To Be or Not to Be
  */
-public class ITicketDaoImpl extends BaseDao implements ITicketDao{
+public class TicketDaoImpl extends BaseDao implements ITicketDao{
     @Override
     public Ticket addTicket(Ticket ticket) {
         List parms = new ArrayList();
@@ -27,11 +27,8 @@ public class ITicketDaoImpl extends BaseDao implements ITicketDao{
     @Override
     public List<Ticket> searchTicket(Ticket ticket) {
         List parms = new ArrayList();
-        String sql = "select seat_num from ticket where screening_id=? AND user_id=?";
-//        String sql2="select * from address where address_province=? AND address_city=? AND address_county=? AND address_road=?";
+        String sql = "select seat_num from ticket where screening_id=?";
         parms.add(ticket.getScreeningId());
-        parms.add(ticket.getUserId());
-        parms.add(ticket.getSeatNum());
         List list = query(sql, parms, Ticket.class);
         if (list!=null){
             //返回所有已选的号

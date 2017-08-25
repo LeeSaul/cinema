@@ -5,7 +5,6 @@ import com.ls.dao.IMovieDao;
 import com.ls.dao.dbimpl.MovieDaoImpl;
 import com.ls.entity.Movie;
 import com.ls.utils.Input;
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -112,5 +111,35 @@ public class MovieBizImpl implements IMovieBiz{
             return null;
         }
         return movies;
+    }
+
+    //查看所有电影信息
+    public Movie getMovie(){
+        List<Movie> movies = searchAllMovies();
+        //显示已有的电影
+        if (movies!=null){
+            System.out.println("---电影列表---");
+            for (Movie movie : movies) {
+                System.out.println(movie);
+            }
+        }else {
+            System.out.println("不存在电影信息");
+            return null;
+        }
+        Movie movie;
+        int inputMovieTimes=0; //输入次数
+        while (true) {
+            inputMovieTimes++;
+            movie = searchMovieInfo();
+            if (movie!=null){
+                break;
+            }
+            System.out.println("电影名不存在");
+            if (inputMovieTimes==3){
+                System.out.println("失败次数过多，已退出");
+                return null;
+            }
+        }
+        return movie;
     }
 }

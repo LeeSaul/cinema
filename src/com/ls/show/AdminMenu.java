@@ -34,8 +34,8 @@ public class AdminMenu {
         System.out.println("请选择");
     }
     public static void commnetAdminMenu(){
-        System.out.println("1、查看评论");
-        System.out.println("2、删除评论");
+        System.out.println("1、查看电影评论");
+        System.out.println("2、删除电影评论");
         System.out.println("0、返回上一级");
         System.out.println("请选择");
     }

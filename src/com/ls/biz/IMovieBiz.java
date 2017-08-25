@@ -13,4 +13,5 @@ public interface IMovieBiz {
     boolean updateMovieInfo();
     Movie searchMovieInfo();
     List<Movie> searchAllMovies();
+    Movie getMovie();
 }

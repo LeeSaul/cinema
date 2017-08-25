@@ -6,7 +6,6 @@ import com.ls.dao.ICinemaDao;
 import com.ls.dao.dbimpl.AddressDaoImpl;
 import com.ls.dao.dbimpl.CinemaDaoImpl;
 import com.ls.entity.Address;
-import com.ls.entity.Cinema;
 import com.ls.utils.Input;
 
 import java.util.List;
@@ -32,7 +31,7 @@ public class AddressBizImpl implements IAddressBiz{
     }
 
     @Override
-    public boolean searchCinemaNameByAdress() {
+    public List<Address> searchCinemaByAddress() {
         Address address=new Address();
         System.out.println("请输入省");
         address.setAddressProvince(Input.getString());
@@ -42,17 +41,9 @@ public class AddressBizImpl implements IAddressBiz{
         address.setAddressCounty(Input.getString());
         List<Address> addresses = addressDao.searchAddress(address);
         if (addresses!=null) {
-            for (Address addressTemp : addresses) {
-                Cinema cinema=new Cinema();
-                cinema.setAddressId(addressTemp.getId());
-                //通过id可以查询到电影院
-                Cinema cinemaTemp = cinemaDao.searchCinemaNameByAddress(cinema);
-                System.out.print("影院名："+cinemaTemp.getCinemaName());
-                System.out.println(addressTemp);
-            }
-            return true;
+            return addresses;
         }
-        return false;
+        return null;
     }
 
     @Override

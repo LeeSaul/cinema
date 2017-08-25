@@ -8,6 +8,7 @@ import com.ls.entity.Address;
 import com.ls.entity.Cinema;
 import com.ls.utils.Input;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,6 +55,25 @@ public class CinemaBizImpl implements ICinemaBiz{
             return  true;
         }
         return false;
+    }
+
+    @Override
+    public List<Cinema> searchCinemaByAddresses() {
+        List<Address> addresses = addressBiz.searchCinemaByAddress();
+        List<Cinema> cinemas=new ArrayList<>();
+        if (addresses!=null) {
+            for (Address addressTemp : addresses) {
+                Cinema cinema=new Cinema();
+                cinema.setAddressId(addressTemp.getId());
+                //通过id可以查询到电影院
+                Cinema cinemaTemp = cinemaDao.searchCinemaNameByAddress(cinema);
+                cinemas.add(cinemaTemp);
+                System.out.print("影院名："+cinemaTemp.getCinemaName());
+                System.out.println(addressTemp);
+            }
+            return cinemas;
+        }
+        return null;
     }
 
     @Override
